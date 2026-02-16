@@ -1,0 +1,173 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>TrendTruth | News Intelligence</title>
+    <link rel="stylesheet" href="/static/styles.css?v=20260215i" />
+  </head>
+  <body>
+    <header class="top-shell">
+      <div class="brand-wrap">
+        <span class="brand-dot">T</span>
+        <div class="brand-copy">
+          <p class="brand-sub">Team Sentinels</p>
+          <h1>TrendTruth <span class="build-tag">UI v3.1</span></h1>
+        </div>
+      </div>
+
+      <div class="search-wrap">
+        <input
+          id="searchInput"
+          type="search"
+          placeholder="Search topics, locations, sources"
+          autocomplete="off"
+        />
+        <button id="searchBtn" class="btn-search" type="button">Search</button>
+      </div>
+
+      <div class="actions-wrap">
+        <button id="refreshBtn" class="btn-primary">Refresh</button>
+      </div>
+    </header>
+
+    <nav class="nav-shell">
+      <div id="categoryTabs" class="nav-tabs"></div>
+    </nav>
+
+    <main class="page">
+      <section class="brief-row">
+        <div>
+          <h2 id="briefingTitle">Your Briefing</h2>
+          <p id="briefingDate" class="brief-date"></p>
+        </div>
+        <div class="stat-strip">
+          <span class="stat-chip">Stories <strong id="totalTrends">0</strong></span>
+          <span class="stat-chip">Low Risk <strong id="lowRiskCount">0</strong></span>
+          <span class="stat-chip">Medium Risk <strong id="mediumRiskCount">0</strong></span>
+          <span class="stat-chip">Avg Risk <strong id="avgRisk">0%</strong></span>
+        </div>
+        <div class="brief-controls">
+          <label for="sortSelect">Sort</label>
+          <select id="sortSelect">
+            <option value="latest">Latest</option>
+            <option value="spread">Most Spread</option>
+            <option value="credible">Most Credible</option>
+          </select>
+        </div>
+      </section>
+
+      <section class="panel-grid">
+        <section class="panel top-panel">
+          <header class="panel-head">
+            <h3 id="topPanelTitle">Top Stories</h3>
+            <div class="status-wrap">
+              <span id="loadingSpinner" class="spinner hidden"></span>
+              <p id="status" class="status">Loading latest stories...</p>
+            </div>
+          </header>
+          <div id="topStory"></div>
+          <div id="storyList" class="story-list"></div>
+          <div class="see-more-wrap">
+            <button id="seeMoreBtn" class="btn-secondary">See 10 More</button>
+          </div>
+        </section>
+
+        <aside class="panel side-panel">
+          <header class="panel-head">
+            <h3 id="sidePanelTitle">Local News</h3>
+          </header>
+          <div id="sideStories" class="side-list"></div>
+          <section class="source-health" id="sourceHealth"></section>
+        </aside>
+      </section>
+    </main>
+
+    <template id="topStoryTemplate">
+      <article class="top-story-card">
+        <a class="top-media-link" target="_blank" rel="noreferrer">
+          <img class="top-image" alt="Story image" loading="lazy" />
+        </a>
+        <div class="top-body">
+          <div class="story-meta">
+            <span class="source-name"></span>
+            <span class="sep">&bull;</span>
+            <span class="via-platform"></span>
+            <span class="sep">&bull;</span>
+            <span class="story-time"></span>
+            <span class="category-pill"></span>
+          </div>
+          <h4 class="story-title"></h4>
+          <p class="story-summary"></p>
+          <div class="score-row">
+            <span class="score-chip fake-chip"></span>
+            <span class="score-chip credibility-chip"></span>
+            <span class="score-chip spread-chip"></span>
+            <span class="score-chip verdict-chip"></span>
+          </div>
+          <div class="story-actions">
+            <a class="read-link" target="_blank" rel="noreferrer">Read Full Story</a>
+            <button class="insight-btn" type="button">Why this rating?</button>
+          </div>
+          <div class="insight-block hidden">
+            <p class="evidence-summary"></p>
+            <ul class="reason-list"></ul>
+            <div class="evidence-links"></div>
+          </div>
+        </div>
+      </article>
+    </template>
+
+    <template id="storyItemTemplate">
+      <article class="story-row">
+        <div class="story-row-main">
+          <p class="row-meta">
+            <span class="source-name"></span>
+            <span class="sep">&bull;</span>
+            <span class="via-platform"></span>
+            <span class="sep">&bull;</span>
+            <span class="story-time"></span>
+          </p>
+          <h4 class="story-title"></h4>
+          <p class="story-summary"></p>
+          <div class="mini-score">
+            <span class="score-chip verdict-chip"></span>
+            <span class="score-chip credibility-chip"></span>
+          </div>
+          <div class="story-actions">
+            <a class="read-link" target="_blank" rel="noreferrer">Read Full Story</a>
+            <button class="insight-btn" type="button">Why this rating?</button>
+          </div>
+          <div class="insight-block hidden">
+            <p class="evidence-summary"></p>
+            <ul class="reason-list"></ul>
+            <div class="evidence-links"></div>
+          </div>
+        </div>
+        <a class="row-media-link" target="_blank" rel="noreferrer">
+          <img class="row-image" alt="Story image" loading="lazy" />
+        </a>
+      </article>
+    </template>
+
+    <template id="sideItemTemplate">
+      <article class="side-item">
+        <div>
+          <p class="side-meta">
+            <span class="source-name"></span>
+            <span class="sep">&bull;</span>
+            <span class="via-platform"></span>
+            <span class="sep">&bull;</span>
+            <span class="story-time"></span>
+          </p>
+          <a class="side-title" target="_blank" rel="noreferrer"></a>
+        </div>
+        <a class="side-image-link" target="_blank" rel="noreferrer">
+          <img class="side-image" alt="Story image" loading="lazy" />
+        </a>
+      </article>
+    </template>
+
+    <script src="/static/app.js?v=20260215i"></script>
+  </body>
+</html>
